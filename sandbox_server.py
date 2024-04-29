@@ -1,6 +1,5 @@
 # sandbox_server.py
 from bokeh.plotting import curdoc
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from sandbox import _calibration_dir
 

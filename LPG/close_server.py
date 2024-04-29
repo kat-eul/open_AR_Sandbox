@@ -1,5 +1,6 @@
 import subprocess,os,sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from tkinter import *
 
 def separate_pid(server_pid):
     all_server_pid = [""]
@@ -25,3 +26,14 @@ for each in cmd :
     if len(server_pid)!=0:
         for pid in server_pid :
             os.kill(int(pid), 15)
+
+# Création de la fenêtre principale
+fenetre = Tk()
+fenetre.title("Popup")
+
+# Création d'un libellé
+label = Label(fenetre, text="Serveurs correctement clôts")
+label.pack(padx=20, pady=20)
+
+# Lancement de la boucle principale
+fenetre.mainloop()

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=true
+Icon=None
+Exec= /home/sandbox/Documents/open_AR_Sandbox/LPG/start_sandbox.sh
+Name=Open AR Sandbox
+Comment=Open AR Sandbox

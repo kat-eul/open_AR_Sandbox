@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=true
+Icon=None
+Exec= /home/sandbox/Documents/open_AR_Sandbox/LPG/start_sensor_calibration.sh
+Name=Kinect Calibration
+Comment=Open AR SandBox

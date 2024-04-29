@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=None
+Exec= /home/sandbox/Documents/open_AR_Sandbox/LPG/close_server.sh
+Name=Close Server
+Comment=Close the server of the Open AR Sandbox

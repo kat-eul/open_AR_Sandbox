@@ -177,15 +177,21 @@ First of all you will need a healthy Python 3 environment. We recommend using
 [Anaconda](https://www.anaconda.com/distribution/). In addition to some standard Python packages, you will need a 
 specific setup dependent on the Kinect version you are using. In the following we provide detailed installation 
 instructions.\
-Now download or clone this repository [open_AR_Sandbox](https://github.com/cgre-aachen/open_AR_Sandbox) from github.
+
+\* This repository is not the original one, see : [open_AR_Sandbox](https://github.com/cgre-aachen/open_AR_Sandbox).*\
+Now download or clone this repository [open_AR_Sandbox_LPG_Nantes](https://github.com/kat-eul/open_AR_Sandbox/tree/lpg_sandbox) from github.
 
 1. First clone the repository:
 ```
-git clone https://github.com/cgre-aachen/open_AR_Sandbox.git
+git clone https://github.com/kat-eul/open_AR_Sandbox.git
 ```
 2. Enter the new downloaded project folder:
 ```
 cd open_AR_Sandbox
+```
+2. Enter the new downloaded project folder:
+```
+git checkout lpg_sandbox
 ```
 3. Create a new anaconda environment
 ```

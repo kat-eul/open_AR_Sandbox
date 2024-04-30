@@ -36,6 +36,10 @@ Following steps
 ~~~~~~~~~~~~~~~
 The following installation step's are the same as the original ones. You can follow the original documentation without cloning the original repository : `Installation documentation <https://github.com/cgre-aachen/open_AR_Sandbox/blob/main/docs/source/getting_started/installation.rst>`_
 
+Module Installation
+~~~~~~~~~~~~~~~~~~~
+You can follow the original documentation without cloning the original repository : `Module installation documentation <https://github.com/cgre-aachen/open_AR_Sandbox/blob/main/docs/source/getting_started/external%20packages.rst>`_
+
 Desktop Shortcuts
 =================
 Changing the paths in the .sh scripts

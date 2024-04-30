@@ -40,13 +40,13 @@ Desktop Shortcuts
 =================
 Changing the paths in the .sh scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There are 4 files to change : `start_sandbox.sh`, `start_projector_calibration.sh`, `start_sensor_calibration.sh` and `close_server.sh`.
+There are 4 files to change : `start_sandbox.sh <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/start_sandbox.sh>`_, `start_projector_calibration.sh <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/start_projector_calibration.sh>`_, `start_sensor_calibration.sh <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/start_sensor_calibration.sh>`_ and `close_server.sh <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/close_server.sh>`_.
 In each .sh scripts, you will need to change <Path to the git project> by the absolute path to the git project.
 Also, <Path to the panel command> must be changed by the path to the panel command. You can search it in all your files, it is a txt file.
 
 Changing the paths in the .desktop scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There are 4 files to change : `open_AR_sandbox.desktop`, `projector_calibration.desktop`, `sensor_calibration.desktop` and `close_server.desktop`.
+There are 4 files to change : `open_AR_sandbox.desktop <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/desktop_files/open_AR_sandbox.desktop>`_, `projector_calibration.desktop <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/desktop_files/projector_calibration.desktop>`_, `sensor_calibration.desktop <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/desktop_files/sensor_calibration.desktop>`_ and `close_server.desktop <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/desktop_files/close_server.desktop>`_.
 In each .desktop scripts, you will need to change <Path to the git project> by the absolute path to the git project.
 You can then move thoses files on your Desktop. Then, you will need to right click on each file and select `Allow execution`.
 If you want to change the icon, juste change `None` by the absolute path to your icon.

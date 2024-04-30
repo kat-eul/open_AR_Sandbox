@@ -21,7 +21,7 @@ Second: Enter the new downloaded project folder::
 
 Third : In the git project, change the used branch ::
 
-    git chechout lpg_sandbox
+    git checkout lpg_sandbox
 
 Fourth: Create a new anaconda environment::
 

@@ -32,6 +32,21 @@ environment before starting anything::
 
    conda activate sandbox-env
 
-open_AR_Sandbox package
-~~~~~~~~~~~~~~~~~~~~~~~
+Following steps
+~~~~~~~~~~~~~~~
 The following installation step's are the same as the original ones. You can follow the original documentation without cloning the original repository : `Installation documentation <https://github.com/cgre-aachen/open_AR_Sandbox/blob/main/docs/source/getting_started/installation.rst>`_
+
+Desktop Shortcuts
+=================
+Changing the paths in the .sh scripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are 4 files to change : `start_sandbox.sh`, `start_projector_calibration.sh`, `start_sensor_calibration.sh` and `close_server.sh`.
+In each .sh scripts, you will need to change <Path to the git project> by the absolute path to the git project.
+Also, <Path to the panel command> must be changed by the path to the panel command. You can search it in all your files, it is a txt file.
+
+Changing the paths in the .desktop scripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are 4 files to change : `open_AR_sandbox.desktop`, `projector_calibration.desktop`, `sensor_calibration.desktop` and `close_server.desktop`.
+In each .desktop scripts, you will need to change <Path to the git project> by the absolute path to the git project.
+You can then move thoses files on your Desktop. Then, you will need to right click on each file and select `Allow execution`.
+If you want to change the icon, juste change `None` by the absolute path to your icon.

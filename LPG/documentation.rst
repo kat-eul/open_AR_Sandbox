@@ -30,4 +30,4 @@ environment before starting anything::
 
 open_AR_Sandbox package
 ~~~~~~~~~~~~~~~~~~~~~~~
-The following installation step's are the same as the original ones. You can follow the original documentation : `Installation documentation <https://github.com/cgre-aachen/open_AR_Sandbox/blob/main/docs/source/getting_started/installation.rst>`
+The following installation step's are the same as the original ones. You can follow the original documentation : `Installation documentation <https://github.com/cgre-aachen/open_AR_Sandbox/blob/main/docs/source/getting_started/installation.rst>`_

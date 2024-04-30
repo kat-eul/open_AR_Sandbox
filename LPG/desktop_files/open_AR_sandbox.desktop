@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Terminal=true
+Terminal=false
 Icon=None
-Exec= /home/sandbox/Documents/open_AR_Sandbox/LPG/start_sandbox.sh
+Exec= <Path to the git project>/open_AR_Sandbox/LPG/start_sandbox.sh
 Name=Open AR Sandbox
-Comment=Open AR Sandbox
+Comment=Launch the Open AR Sandbox

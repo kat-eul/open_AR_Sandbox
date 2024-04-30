@@ -15,15 +15,19 @@ First: Clone the repository::
 
    git clone https://github.com/kat-eul/open_AR_Sandbox.git
 
-Second : In the git project, change the used branch ::
+Second: Enter the new downloaded project folder::
+
+    cd open_AR_Sandbox
+
+Third : In the git project, change the used branch ::
 
     git chechout lpg_sandbox
 
-Third: Create a new anaconda environment::
+Fourth: Create a new anaconda environment::
 
    conda create -n sandbox-env python
 
-Fourth: When you want to use the sandbox and the packages we are about to install you will have to activate the
+Fifth: When you want to use the sandbox and the packages we are about to install you will have to activate the
 environment before starting anything::
 
    conda activate sandbox-env

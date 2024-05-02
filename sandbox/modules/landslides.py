@@ -214,13 +214,18 @@ class LandslideSimulation(ModuleTemplate):
     def select_simulation_data(self, simulation_path, release_id):
         """Make sure that the simulation data corresponds to the loaded topography"""
         list_files = os.listdir(simulation_path)
+        file_name = None
         for i in list_files:
             temp = [str(s) for s in i if s.isdigit()]
             if len(temp) > 0:
                 if temp[0] == self.Load_Area.file_id and temp[2] == release_id:
                     file_name = i
-        file_location = simulation_path + file_name
-        self.load_simulation_data_npz(file_location)
+        if file_name != None :   
+            self._widget_warning_file_not_found.visible = False  
+            file_location = simulation_path + file_name
+            self.load_simulation_data_npz(file_location)
+        else :
+            self._widget_warning_file_not_found.visible = True
 
     def modify_to_box_coordinates(self, id):
         """Move the origin of the release areas to be correctly displayed in the sandbox"""
@@ -305,6 +310,8 @@ class LandslideSimulation(ModuleTemplate):
 
         self._widget_load_release_area.param.watch(self._callback_load_release_area, 'clicks',
                                                    onlychanged=False)
+        self._widget_warning_file_not_found = pn.pane.Alert("Warning : no file selected !")
+        self._widget_warning_file_not_found.visible = False
         col1 = pn.Column("## Load widget",
                             '<b>File path</b>',
                             self._widget_simulation_folder,
@@ -312,6 +319,7 @@ class LandslideSimulation(ModuleTemplate):
                             self._widget_load)
         col2 = pn.Column('<b>Load Simulation</b>',
                           self._widget_load_release_area,
+                          self._widget_warning_file_not_found,
                           '<b>Select a release area</b>',
                           pn.WidgetBox(self._widget_available_release_areas))
         panel = pn.Row(col1, col2)

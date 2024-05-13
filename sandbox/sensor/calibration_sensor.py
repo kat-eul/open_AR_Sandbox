@@ -4,6 +4,7 @@ pn.extension()
 from sandbox.sensor import Sensor
 from sandbox.projector import Projector
 from sandbox import _calibration_dir
+from sandbox.main_thread import MainThread
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl
@@ -12,7 +13,7 @@ from matplotlib.figure import Figure
 
 class CalibSensor:  # TODO: include automatic
     """Module to calibrate the sensor"""
-    def __init__(self,  calibprojector: str = None, name: str = 'kinectv2', **kwargs):
+    def __init__(self,  calibprojector: str = None, name: str = 'kinectv2', main_thread:MainThread = None, **kwargs):
         # color map setup
         self.c_under = '#DBD053'
         self.c_over = '#DB3A34'
@@ -20,7 +21,11 @@ class CalibSensor:  # TODO: include automatic
         self.c_margin = '#084C61'
         self.margin_alpha = 0.5
         self.calibprojector = calibprojector
-        self.sensor = Sensor(name=name, invert=False, clip_values=False, gauss_filter=False, **kwargs)
+        if main_thread == None :
+            self.sensor = Sensor(name=name, invert=False, clip_values=False, gauss_filter=False, **kwargs)
+        else :
+            self.sensor = main_thread.sensor
+        self.main_thread = main_thread
         self.projector = Projector(calibprojector=self.calibprojector, **kwargs)
         import copy
         self.cmap = copy.copy(mpl.cm.get_cmap("Greys_r"))
@@ -117,12 +122,14 @@ class CalibSensor:  # TODO: include automatic
                          self._widget_json_filename,
                          self._widget_json_save
                          )
+        exit = pn.Column(self._widget_exit_calib)
 
         rows = pn.Row(widgets, self.calib_notebook_frame)
         panel = pn.Column('## Sensor calibration', rows)
         tabs = pn.Tabs(('Calibration', panel),
                        ("Box dimensions", box),
-                       ("Save files", save)
+                       ("Save files", save),
+                       ("Exit",exit)
                        )
         return tabs
 
@@ -223,6 +230,10 @@ class CalibSensor:  # TODO: include automatic
         self._widget_json_load_projector = pn.widgets.Button(name='Load calibration')
         self._widget_json_load_projector.param.watch(self._callback_json_load_projector, 'clicks', onlychanged=False)
 
+        self._widget_exit_calib = pn.widgets.Button(name='Exit Calibration')
+        self._widget_exit_calib.param.watch(self._callback_exit, 'clicks', onlychanged=False)
+
+
         return True
 
         # sensor callbacks
@@ -280,6 +291,10 @@ class CalibSensor:  # TODO: include automatic
 
     def _callback_box_height(self, event):
         self.sensor.box_height = float(event.new)
+
+    def _callback_exit(self,event):
+        self.main_thread.sensor.param_for_main_thread()
+        self.main_thread.resume()
 
     # TODO: Make sense to enable this automatic calibration?
     """def _callback_enable_auto_calibration(self, event):

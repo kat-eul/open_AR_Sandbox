@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Terminal=false
-Icon=None
-Exec= <Path to the git project>/open_AR_Sandbox/LPG/start_projector_calibration.sh
-Name=Projector Calibration
-Comment=Launch the projector's calibration for the Open AR SandBox

@@ -42,7 +42,7 @@ class Projector(object):
       color: #CCCCCC;
     '''
 
-    def __init__(self, calibprojector: str = None, use_panel: bool = True, p_width=1280, p_height=800,
+    def __init__(self, calibprojector: str = None, use_panel: bool = True, p_width=1920, p_height=1080,
                  show_colorbar: bool = False, position_colorbar: str = "vertical",
                  show_legend: bool = False, show_hot: bool = False,
                  show_profile: bool = False, ):

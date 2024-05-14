@@ -15,8 +15,8 @@ _platform = platform.system()
 # Store the name of the sensor as a global variable, and the projector resolution
 # so it can be used and changed in the same session for all the functions
 name_sensor = "kinect_v2"
-p_width = 1280
-p_height = 800
+p_width = 1920
+p_height = 1080
 
 
 def calibrate_projector():
@@ -309,7 +309,17 @@ class Sandbox:
 
     def show_widgets(self):
         self._create_widgets()
-        widgets = pn.Column("# Module selector",
+        calibration = pn.Column("#<b>Calibration</b>",
+                                '<b>Change the calibration file</b>',
+                                pn.WidgetBox('Projector',
+                                            self._widget_calibration_projector,
+                                            'Sensor',
+                                            self._widget_calibration_sensor),
+                                '<b>Create new projector calibration file</b>',
+                                self._widget_create_calibration_projector,
+                                '<b>Create new sensor calibration file</b>',
+                                self._widget_create_calibration_sensor)
+        widgets = pn.Column("#<b>Module Selector</b>",
                             self._widget_main_thread,
                             '<b>Select the module you want to show the widgets and start </b>',
                             self._widget_topo,
@@ -322,18 +332,9 @@ class Sandbox:
                             self._widget_pygimli if self.Modules.get('GeoelectricsModule') is not None else None,
                             self._widget_devito if self.Modules.get('SeismicModule') is not None else None,
                             self._widget_torch if self.Modules.get('LandscapeGeneration') is not None else None,
-                            #'<b>Change the calibration file</b>',
-                            #pn.WidgetBox('Projector',
-                                         #self._widget_calibration_projector,
-                                         #'Sensor',
-                                         #self._widget_calibration_sensor),
-                            #'<b>Create new projector calibration file</b>',
-                            #self._widget_create_calibration_projector,
-                            #'<b>Create new sensor calibration file</b>',
-                            #self._widget_create_calibration_sensor,
                             )
         thread = pn.Column("##<b>Thread Controller</b>",
-                           #self._widget_thread_selector,
+                           self._widget_thread_selector,
                            '<b>Start a new server</b>',
                            self._widget_new_server,
                            "<b>Deactivate or activate aruco detection</b>",
@@ -343,7 +344,7 @@ class Sandbox:
                            self.Main_Thread._widget_clear_axes,
                            self.Main_Thread._widget_error_markdown)
 
-        panel = pn.Row(widgets, thread)
+        panel = pn.Row(calibration, thread ,widgets)
 
         return panel
 

@@ -357,16 +357,16 @@ class MainThread:
 
     def widget_plot_module(self):
         if isinstance(self.Aruco, MarkerDetection):
-            marker = pn.Column(self.widgets_aruco_visualization(), self.widget_thread_controller())
+            marker = pn.Column(self.widgets_aruco_visualization())
             widgets = pn.Column(self.cmap_frame.show_widgets(),
                                 self.contours.show_widgets())
             rows = pn.Row(widgets, marker)
         else:
-            widgets = pn.Column(self.cmap_frame.show_widgets(),
-                                self.contours.show_widgets())
-            rows = pn.Row(widgets, self.widget_thread_controller())
+            row = pn.Row(self.cmap_frame.show_widgets(),self.contours.show_widgets())
+            widgets = pn.Column(row)
+            
 
-        panel1 = pn.Column("## Plotting interaction widgets", rows)
+        panel1 = pn.Column("## Plotting interaction widgets", widgets)
         self._update_widget_module_selector()
 
         panel2 = self.projector.show_widgets_sidepanels()

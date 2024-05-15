@@ -337,6 +337,8 @@ class Sandbox:
                            self._widget_thread_selector,
                            '<b>Start a new server</b>',
                            self._widget_new_server,
+                           '<b>Acticate or deactive difference actualisation</b>',
+                           self.Main_Thread._widget_check_difference,
                            "<b>Deactivate or activate aruco detection</b>",
                            self._widget_aruco,
                            "<b>Manager of all modules</b>",

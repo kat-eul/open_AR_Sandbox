@@ -247,16 +247,6 @@ class Sensor:
             frame = self.get_inverted_frame(frame)
         self.depth = frame
         return self.depth
-    
-    def param_for_calib_sensor(self):
-        self.filter = False
-        self.clip = False
-        self.invert = False
-
-    def param_for_main_thread(self):
-        self.filter = True
-        self.clip = True
-        self.invert = True
 
     @property
     def vmax(self):

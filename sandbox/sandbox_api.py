@@ -1,14 +1,7 @@
-import time
 import panel as pn
 import traceback
 from sandbox import _calibration_dir, set_logger
-from sandbox.sensor import Sensor, CalibSensor
-from sandbox.projector import Projector
 import platform
-from sandbox import _calibration_dir
-
-_calibprojector = _calibration_dir + "my_projector_calibration.json"
-_calibsensor = _calibration_dir + "my_sensor_calibration.json"
 logger = set_logger(__name__)
 _platform = platform.system()
 
@@ -90,6 +83,8 @@ class Sandbox:
     """
 
     def __init__(self,
+                 sensor,  # : Sensor,
+                 projector,  # : Projector,
                  aruco,  # : MarkerDetection = None,
                  kwargs_contourlines: dict = {},
                  kwargs_cmap: dict = {},
@@ -102,15 +97,11 @@ class Sandbox:
         self._torch_import = False
         self._check_import(**kwargs_external_modules)
 
-        self.projector = Projector(calibprojector=_calibprojector, use_panel=True)
-        self.sensor = Sensor(calibsensor=_calibsensor, name="kinect_v2")
-        self._projector_calib = self.projector.json_filename
+        self.sensor = sensor
         self._sensor_calib = self.sensor.json_filename
-        
-        if aruco==True :
-            self.aruco = MarkerDetection(sensor=self._sensor)
-        else : 
-            self.aruco = None
+        self.projector = projector
+        self._projector_calib = self.projector.json_filename
+        self.aruco = aruco
         from sandbox.markers import MarkerDetection
         if isinstance(self.aruco, MarkerDetection):
             self._disable_aruco = False
@@ -404,13 +395,9 @@ class Sandbox:
         self.Main_Thread.projector = self.projector
 
     def _callback_create_calibration_sensor(self, event):
-        self.Main_Thread.pause()
-
-        # Modifying the information that need to be collected for the calibration
-        self.Main_Thread.sensor.param_for_calib_sensor()
-        module = CalibSensor(calibprojector=_calibprojector, main_thread=self.Main_Thread)
-        widget = module.calibrate_sensor()
-        widget.show()
+        self.Main_Thread.stop()
+        self.sensor = calibrate_sensor()
+        self.Main_Thread.sensor = self.sensor
 
     def _callback_new_server(self, event):
         global p_width, p_height
@@ -419,10 +406,9 @@ class Sandbox:
 
     def _callback_thread_selector(self, event):
         if event.new == "Start":
-            self.Main_Thread.resume()
+            self.Main_Thread.run()
         elif event.new == "Stop":
-            self.Main_Thread.pause()
-
+            self.Main_Thread.stop()
 
     def _callback_aruco(self, event):
         self.Main_Thread.ARUCO_ACTIVE = event.new

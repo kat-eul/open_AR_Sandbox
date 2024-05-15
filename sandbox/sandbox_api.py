@@ -1,6 +1,10 @@
 import panel as pn
 import traceback
 from sandbox import _calibration_dir, set_logger
+from sandbox.sensor import Sensor, CalibSensor
+from sandbox.projector import Projector
+from sandbox.markers import MarkerDetection
+from sandbox.main_thread import MainThread
 import platform
 logger = set_logger(__name__)
 _platform = platform.system()
@@ -21,14 +25,13 @@ def calibrate_projector():
 
 
 def calibrate_sensor(calibprojector: str = _calibration_dir + "my_projector_calibration.json",
-                     name: str = None):
+                     name: str = None,main_thread:MainThread = None):
     global name_sensor
     if name is None:
         name = name_sensor
     else:
         name_sensor = name
-    from sandbox.sensor import CalibSensor
-    module = CalibSensor(calibprojector=calibprojector, name=name)
+    module = CalibSensor(calibprojector=calibprojector, name=name, main_thread=main_thread)
     widget = module.calibrate_sensor()
     widget.show()
     return module.sensor
@@ -50,18 +53,19 @@ def start_server(calibprojector: str = None,  # _calibration_dir + "my_projector
     else:
         name_sensor = sensor_name
 
-    from sandbox.projector import Projector
     if kwargs_projector.get("p_width") is not None:
         p_width = kwargs_projector.get("p_width")
     if kwargs_projector.get("p_height") is not None:
         p_height = kwargs_projector.get("p_height")
     projector = Projector(calibprojector=calibprojector, use_panel=True, **kwargs_projector)
 
+
+    from sandbox.sensor import Sensor
+    
     from sandbox.sensor import Sensor
     sensor = Sensor(calibsensor=calibsensor, name=sensor_name, **kwargs_sensor)
 
     if aruco_marker:
-        from sandbox.markers import MarkerDetection
         aruco = MarkerDetection(sensor=sensor, **kwargs_aruco)
     else:
         aruco = None
@@ -102,7 +106,6 @@ class Sandbox:
         self.projector = projector
         self._projector_calib = self.projector.json_filename
         self.aruco = aruco
-        from sandbox.markers import MarkerDetection
         if isinstance(self.aruco, MarkerDetection):
             self._disable_aruco = False
             self.ARUCO_ACTIVE = True
@@ -396,7 +399,7 @@ class Sandbox:
 
     def _callback_create_calibration_sensor(self, event):
         self.Main_Thread.stop()
-        self.sensor = calibrate_sensor()
+        self.sensor = calibrate_sensor(main_thread=self.Main_Thread)
         self.Main_Thread.sensor = self.sensor
 
     def _callback_new_server(self, event):

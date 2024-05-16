@@ -300,7 +300,7 @@ class CalibSensor:  # TODO: include automatic
         self.main_thread.sensor.filter = True
         self.main_thread.sensor.invert = True
         self.main_thread.sensor.clip = True
-        self.main_thread.run()
+        self.main_thread.resume()
 
     # TODO: Make sense to enable this automatic calibration?
     """def _callback_enable_auto_calibration(self, event):

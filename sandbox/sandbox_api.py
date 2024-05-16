@@ -398,7 +398,7 @@ class Sandbox:
         self.Main_Thread.projector = self.projector
 
     def _callback_create_calibration_sensor(self, event):
-        self.Main_Thread.stop()
+        self.Main_Thread.pause()
         self.sensor = calibrate_sensor(main_thread=self.Main_Thread)
         self.Main_Thread.sensor = self.sensor
 

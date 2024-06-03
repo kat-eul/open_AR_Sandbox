@@ -44,13 +44,13 @@ Desktop Shortcuts
 =================
 Changing the paths in the .sh scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There are 2 files to change : `start_sandbox.sh <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/start_sandbox.sh>`_ and `close_server.sh <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/close_server.sh>`_.
-In each .sh scripts, you will need to change <Path to the git project> by the absolute path to the git project.
+There is one file to modify : `start_sandbox.sh <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/start_sandbox.sh>`_
+In this .sh scripts, you will need to change <Path to the git project> by the absolute path to the git project.
 Also, <Path to the panel command> must be changed by the path to the panel command. You can search it in your personal files, in general, it will be located in the following folder : ~/.config/jupyterlab-desktop/jlab_server/bin/.
 
 Changing the paths in the .desktop scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There are 2 files to change : `open_AR_sandbox.desktop <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/desktop_files/open_AR_sandbox.desktop>`_ and `close_server.desktop <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/desktop_files/close_server.desktop>`_.
-In each .desktop scripts, you will need to change <Path to the git project> by the absolute path to the git project.
+There is one files to modify : `open_AR_sandbox.desktop <https://github.com/kat-eul/open_AR_Sandbox/blob/lpg_sandbox/LPG/desktop_files/open_AR_sandbox.desktop>`_.
+In this .desktop scripts, you will need to change <Path to the git project> by the absolute path to the git project.
 You can then move thoses files on your Desktop. Then, you will need to right click on each file and select `Allow execution`.
 If you want to change the icon, juste change `None` by the absolute path to your icon.

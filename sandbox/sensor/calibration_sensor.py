@@ -13,6 +13,7 @@ from matplotlib.figure import Figure
 
 class CalibSensor:  # TODO: include automatic
     """Module to calibrate the sensor"""
+
     def __init__(self,  calibprojector: str = None, name: str = 'kinectv2',main_thread:MainThread = None, **kwargs):
         # color map setup
         self.c_under = '#DBD053'
@@ -21,6 +22,7 @@ class CalibSensor:  # TODO: include automatic
         self.c_margin = '#084C61'
         self.margin_alpha = 0.5
         self.calibprojector = calibprojector
+
         if main_thread == None :
             self.sensor = Sensor(name=name, invert=False, clip_values=False, gauss_filter=False, **kwargs)
         else :
@@ -29,7 +31,7 @@ class CalibSensor:  # TODO: include automatic
             main_thread.sensor.clip = False
             self.sensor = main_thread.sensor
         self.main_thread = main_thread
-
+        
         self.projector = Projector(calibprojector=self.calibprojector, **kwargs)
         import copy
         self.cmap = copy.copy(mpl.cm.get_cmap("Greys_r"))
@@ -126,7 +128,6 @@ class CalibSensor:  # TODO: include automatic
                          self._widget_json_filename,
                          self._widget_json_save
                          )
-
         exit = pn.Column(self._widget_exit_calib)
 
         rows = pn.Row(widgets, self.calib_notebook_frame)
@@ -237,7 +238,7 @@ class CalibSensor:  # TODO: include automatic
 
         self._widget_exit_calib = pn.widgets.Button(name='Exit Calibration')
         self._widget_exit_calib.param.watch(self._callback_exit_calib, 'clicks', onlychanged=False)
-
+        
         return True
 
         # sensor callbacks

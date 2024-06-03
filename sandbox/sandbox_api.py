@@ -106,6 +106,7 @@ class Sandbox:
         self.projector = projector
         self._projector_calib = self.projector.json_filename
         self.aruco = aruco
+
         if isinstance(self.aruco, MarkerDetection):
             self._disable_aruco = False
             self.ARUCO_ACTIVE = True

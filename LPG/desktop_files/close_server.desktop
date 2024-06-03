@@ -2,6 +2,6 @@
 Type=Application
 Terminal=false
 Icon=None
-Exec= <Path to the git project>/open_AR_Sandbox/LPG/close_server.sh
+Exec= pkill -9 panel
 Name=Close Server
 Comment=Close the server of the Open AR Sandbox

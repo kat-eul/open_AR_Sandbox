@@ -1,14 +1,11 @@
-import time
 import panel as pn
 import traceback
 from sandbox import _calibration_dir, set_logger
 from sandbox.sensor import Sensor, CalibSensor
 from sandbox.projector import Projector
+from sandbox.markers import MarkerDetection
+from sandbox.main_thread import MainThread
 import platform
-from sandbox import _calibration_dir
-
-_calibprojector = _calibration_dir + "my_projector_calibration.json"
-_calibsensor = _calibration_dir + "my_sensor_calibration.json"
 logger = set_logger(__name__)
 _platform = platform.system()
 
@@ -28,14 +25,13 @@ def calibrate_projector():
 
 
 def calibrate_sensor(calibprojector: str = _calibration_dir + "my_projector_calibration.json",
-                     name: str = None):
+                     name: str = None,main_thread:MainThread = None):
     global name_sensor
     if name is None:
         name = name_sensor
     else:
         name_sensor = name
-    from sandbox.sensor import CalibSensor
-    module = CalibSensor(calibprojector=calibprojector, name=name)
+    module = CalibSensor(calibprojector=calibprojector, name=name, main_thread=main_thread)
     widget = module.calibrate_sensor()
     widget.show()
     return module.sensor
@@ -57,18 +53,19 @@ def start_server(calibprojector: str = None,  # _calibration_dir + "my_projector
     else:
         name_sensor = sensor_name
 
-    from sandbox.projector import Projector
     if kwargs_projector.get("p_width") is not None:
         p_width = kwargs_projector.get("p_width")
     if kwargs_projector.get("p_height") is not None:
         p_height = kwargs_projector.get("p_height")
     projector = Projector(calibprojector=calibprojector, use_panel=True, **kwargs_projector)
 
+
+    from sandbox.sensor import Sensor
+    
     from sandbox.sensor import Sensor
     sensor = Sensor(calibsensor=calibsensor, name=sensor_name, **kwargs_sensor)
 
     if aruco_marker:
-        from sandbox.markers import MarkerDetection
         aruco = MarkerDetection(sensor=sensor, **kwargs_aruco)
     else:
         aruco = None
@@ -90,6 +87,8 @@ class Sandbox:
     """
 
     def __init__(self,
+                 sensor,  # : Sensor,
+                 projector,  # : Projector,
                  aruco,  # : MarkerDetection = None,
                  kwargs_contourlines: dict = {},
                  kwargs_cmap: dict = {},
@@ -102,16 +101,12 @@ class Sandbox:
         self._torch_import = False
         self._check_import(**kwargs_external_modules)
 
-        self.projector = Projector(calibprojector=_calibprojector, use_panel=True)
-        self.sensor = Sensor(calibsensor=_calibsensor, name="kinect_v2")
-        self._projector_calib = self.projector.json_filename
+        self.sensor = sensor
         self._sensor_calib = self.sensor.json_filename
-        
-        if aruco==True :
-            self.aruco = MarkerDetection(sensor=self._sensor)
-        else : 
-            self.aruco = None
-        from sandbox.markers import MarkerDetection
+        self.projector = projector
+        self._projector_calib = self.projector.json_filename
+        self.aruco = aruco
+
         if isinstance(self.aruco, MarkerDetection):
             self._disable_aruco = False
             self.ARUCO_ACTIVE = True
@@ -408,12 +403,8 @@ class Sandbox:
 
     def _callback_create_calibration_sensor(self, event):
         self.Main_Thread.pause()
-
-        # Modifying the information that need to be collected for the calibration
-        self.Main_Thread.sensor.param_for_calib_sensor()
-        module = CalibSensor(calibprojector=_calibprojector, main_thread=self.Main_Thread)
-        widget = module.calibrate_sensor()
-        widget.show()
+        self.sensor = calibrate_sensor(main_thread=self.Main_Thread)
+        self.Main_Thread.sensor = self.sensor
 
     def _callback_new_server(self, event):
         global p_width, p_height
@@ -422,10 +413,9 @@ class Sandbox:
 
     def _callback_thread_selector(self, event):
         if event.new == "Start":
-            self.Main_Thread.resume()
+            self.Main_Thread.run()
         elif event.new == "Stop":
-            self.Main_Thread.pause()
-
+            self.Main_Thread.stop()
 
     def _callback_aruco(self, event):
         self.Main_Thread.ARUCO_ACTIVE = event.new

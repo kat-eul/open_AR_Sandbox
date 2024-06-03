@@ -56,17 +56,7 @@ class KinectV2:
             self._lock = threading.Lock()
             self._thread = None
             self._thread_status = 'stopped'  # status: 'stopped', 'running'
-
-            self.device = Device()
-            self._color = numpy.zeros((self.color_height, self.color_width, 4))
-            self._depth = numpy.zeros((self.depth_height, self.depth_width))
-            self._ir = numpy.zeros((self.depth_height, self.depth_width))
             self._run()
-            logger.info("Searching first frame")
-            while True:
-                if not numpy.all(self._depth == 0):
-                    logger.info("First frame found")
-                    break
 
         else:
             logger.error(_platform + "not implemented")
@@ -78,8 +68,21 @@ class KinectV2:
         """
         if self._thread_status != 'running':
             self._thread_status = 'running'
+
+            self.device = Device()
+            self._color = numpy.zeros((self.color_height, self.color_width, 4))
+            self._depth = numpy.zeros((self.depth_height, self.depth_width))
+            self._ir = numpy.zeros((self.depth_height, self.depth_width))
+
             self._thread = threading.Thread(target=self._open_kinect_frame_stream, daemon=True, )
             self._thread.start()
+
+            logger.info("Searching first frame")
+            while True:
+                if not numpy.all(self._depth == 0):
+                    logger.info("First frame found")
+                    break
+            
             logger.info('Acquiring frames...')
         else:
             logger.info('Already running.')
@@ -91,6 +94,7 @@ class KinectV2:
         if self._thread_status is not 'stopped':
             self._thread_status = 'stopped'  # set flag to end thread loop
             self._thread.join()  # wait for the thread to finish
+            self.device.close()
             logger.info('Stopping frame acquisition.')
         else:
             logger.info('thread was not running.')
